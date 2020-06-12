@@ -6,7 +6,7 @@
  */
 
 @import "../../../node_modules/office-ui-fabric-core/dist/sass/References";
-// @import "../../styles/shared-styles.scss";
+@import "../../../node_modules/@microsoft/mgt/src/styles/shared-styles.scss";
 
 $avatar-size-s: var(--avatar-size-s, var(--avatar-size, 24px));
 $avatar-size: var(--avatar-size, var(--avatar-size-s, 48px));

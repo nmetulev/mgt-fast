@@ -12,6 +12,7 @@ export const template = html<MgtFastPerson>`
     (x) => x.renderNoData()
   )}
 
+  ${when(x => x.personDetails, html<MgtFastPerson>`
   <div
     class="root"
     @click=${(x, c) => x.handleMouseClick(c.event as MouseEvent)}
@@ -22,16 +23,17 @@ export const template = html<MgtFastPerson>`
       ${(x) => x.renderImage()} ${(x) => x.renderDetails()}
     </div>
   </div>
+  `)}
 `;
 
-export const loadingTemplate = html<MgtFastPerson>``;
+export const loadingTemplate = html<MgtFastPerson>`<div></div>`;
 
 export const noDataTemplate = html<MgtFastPerson>`
 <i :className="avatar-icon ms-Icon ms-Icon--Contact ${(x) =>
   x.isLargeAvatar() ? "small" : ""}></i>`;
 
 export const imageTemplate = html<MgtFastPerson>`
-<div :className="user-avatar ${(x) =>
+<div class="user-avatar ${(x) =>
   !x.getImage() || x._isInvalidImageSrc ? "initials" : ""} ${(x) =>
   !x.isLargeAvatar() ? "small" : ""} ${(x) => x._personAvatarBg}"
     title=${(x) =>
@@ -41,9 +43,9 @@ export const imageTemplate = html<MgtFastPerson>`
     aria-label=${(x) =>
       x.personDetails.displayName ||
       getEmailFromGraphEntity(x.personDetails) ||
-      ""}
+      ""}>
   ${when(
-    (x) => x.getImage() && x._isInvalidImageSrc,
+    (x) => x.getImage() && !x._isInvalidImageSrc,
     html<MgtFastPerson>`
       <img
         alt=${(x) =>
@@ -71,6 +73,7 @@ export const imageTemplate = html<MgtFastPerson>`
       </span>
     `
   )}
+  </div>
 `;
 
 export const detailsTemplate = html<MgtFastPerson>`

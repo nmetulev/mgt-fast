@@ -7,22 +7,18 @@
 
 import { customElement, attr, observable } from "@microsoft/fast-element";
 import * as MicrosoftGraph from "@microsoft/microsoft-graph-types";
-import * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
 
 import {
   findPeople,
   getEmailFromGraphEntity,
 } from "@microsoft/mgt/dist/es6/graph/graph.people";
 import { getPersonImage } from "@microsoft/mgt/dist/es6/graph/graph.photos";
-import { getUserPresence } from "@microsoft/mgt/dist/es6/graph/graph.presence";
 import { getUserWithPhoto } from "@microsoft/mgt/dist/es6/graph/graph.user";
-import { getSvg, SvgIcon } from "@microsoft/mgt/dist/es6/utils/SvgHelper";
 import {
   AvatarSize,
   IDynamicPerson,
   Providers,
   ProviderState,
-  PersonCardInteraction,
 } from "@microsoft/mgt";
 
 import { FastMgtBase } from "../FastMgtBase";
@@ -32,8 +28,8 @@ import {
   loadingTemplate,
   noDataTemplate,
   detailsTemplate,
+  imageTemplate,
 } from "./mgt-fast-person-template";
-import { ImageTemplate } from "../fluent-avatar/avatar-template";
 
 /**
  * Enumeration to define what parts of the person component render
@@ -249,30 +245,30 @@ export class MgtFastPerson extends FastMgtBase {
     this._isInvalidImageSrc = false;
   }
 
-  /**
-   * Synchronizes property values when attributes change.
-   *
-   * @param {*} name
-   * @param {*} oldValue
-   * @param {*} newValue
-   * @memberof MgtPerson
-   */
-  public attributeChangedCallback(name, oldval, newval) {
-    super.attributeChangedCallback(name, oldval, newval);
+  // /**
+  //  * Synchronizes property values when attributes change.
+  //  *
+  //  * @param {*} name
+  //  * @param {*} oldValue
+  //  * @param {*} newValue
+  //  * @memberof MgtPerson
+  //  */
+  // public attributeChangedCallback(name, oldval, newval) {
+  //   super.attributeChangedCallback(name, oldval, newval);
 
-    // TODO: this should be a property changed callback most likely
-    if (oldval === newval) {
-      return;
-    }
+  //   // TODO: this should be a property changed callback most likely
+  //   if (oldval === newval) {
+  //     return;
+  //   }
 
-    switch (name) {
-      case "person-query":
-      case "user-id":
-        this.personDetails = null;
-        this.requestStateUpdate();
-        break;
-    }
-  }
+  //   switch (name) {
+  //     case "person-query":
+  //     case "user-id":
+  //       this.personDetails = null;
+  //       this.requestStateUpdate();
+  //       break;
+  //   }
+  // }
 
   /**
    * Render the loading state
@@ -312,7 +308,7 @@ export class MgtFastPerson extends FastMgtBase {
    * @memberof MgtPerson
    */
   public renderImage() {
-    return ImageTemplate;
+    return imageTemplate;
   }
 
   /**

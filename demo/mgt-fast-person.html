@@ -5,8 +5,12 @@
       type="module"
       src="../dist/es6/components/mgt-fast-person/mgt-fast-person.js"
     ></script>
+    <script type="module" src="../node_modules/@microsoft/mgt/dist/es6/index.js" ></script>
+    <script type="module" src="../node_modules/@microsoft/mgt/dist/es6/mock/mgt-mock-provider.js" ></script>
   </head>
   <body>
-    <mgt-fast-person person-query="me" view="avatar"></mgt-person>
+    <mgt-mock-provider></mgt-mock-provider>
+    <mgt-login></mgt-login>
+    <mgt-fast-person person-query="me" view="twolines"></mgt-person>
   </body>
 </html>
