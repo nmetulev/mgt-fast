@@ -1,0 +1,123 @@
+@import '../../../node_modules/office-ui-fabric-core/dist/sass/References';
+
+$persona-avatar-size: --persona--avatar-size;
+$persona-avatar-background: --persona--avatar-background;
+$persona-avatar-color: --persona--avatar-color;
+
+$persona-text-color: --persona--text-color;
+$persona-secondary-color: --persona--secondary-color;
+
+$persona-text-font-size: --persona--text-font-size;
+$persona-secondary-font-size: --persona--secondary-font-size;
+
+@mixin avatarStyles($size) {
+  --avatar--size: var(#{$persona-avatar-size}, #{$size});
+}
+
+$colors: (
+  'pinkRed10': $ms-color-sharedPinkRed10,
+  'red20': $ms-color-sharedRed20,
+  'red10': $ms-color-sharedRed10,
+  'orange20': $ms-color-sharedOrange20,
+  'orangeYellow20': $ms-color-sharedOrangeYellow20,
+  'green10': $ms-color-sharedGreen10,
+  'green20': $ms-color-sharedGreen20,
+  'cyan20': $ms-color-sharedCyan20,
+  'cyan30': $ms-color-sharedCyan30,
+  'cyanBlue10': $ms-color-sharedCyanBlue10,
+  'blue10': $ms-color-sharedBlue10,
+  'blueMagenta30': $ms-color-sharedBlueMagenta30,
+  'blueMagenta20': $ms-color-sharedBlueMagenta20,
+  'magenta20': $ms-color-sharedMagenta20,
+  'magenta10': $ms-color-sharedMagenta10,
+  'magentaPink10': $ms-color-sharedMagentaPink10,
+  'orange30': $ms-color-sharedOrange30,
+  'gray30': $ms-color-sharedGray30,
+  'gray20': $ms-color-sharedGray20,
+);
+
+$sizes: (
+  'size24': 24px,
+  'size32': 32px,
+  'size40': 40px,
+  'size48': 48px,
+  'size56': 56px,
+  'size72': 72px,
+  'size100': 100px,
+  'size120': 120px,
+);
+
+:host {
+  display: inline-block;
+  font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto,
+    'Helvetica Neue', sans-serif;
+  vertical-align: top;
+
+  .root {
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    font-weight: 400;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: rgb(50, 49, 48);
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .avatar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      @each $name, $color in $colors {
+        &.#{$name} {
+          --avatar--background: var(#{$persona-avatar-background}, #{$color});
+        }
+      }
+
+      @each $name, $size in $sizes {
+        &.#{$name} {
+          --avatar--size: var(#{$persona-avatar-size}, #{$size});
+        }
+      }
+
+      fluent-avatar {
+        vertical-align: baseline;
+      }
+    }
+
+    .details {
+      padding: 0 8px 0 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: 400;
+      font-size: var($persona-text-font-size, 14px);
+      overflow: hidden;
+
+      .primaryText {
+        color: var($persona-text-color, rgb(50, 49, 48));
+      }
+
+      .secondaryText {
+        color: var($persona-secondary-color, rgb(96, 94, 92));
+        font-size: var($persona-secondary-font-size, 12px);
+      }
+
+      &.size72,
+      &.size100,
+      &.size120 {
+        .primaryText {
+          font-size: var($persona-text-font-size, 20px);
+        }
+        .secondaryText {
+          font-size: var($persona-secondary-font-size, 14px);
+        }
+      }
+    }
+  }
+}

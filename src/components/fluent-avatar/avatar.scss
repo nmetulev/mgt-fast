@@ -1,0 +1,69 @@
+@import '../../../node_modules/office-ui-fabric-core/dist/sass/References';
+
+$avatar-size: --avatar--size;
+$avatar-background: --avatar--background;
+$avatar-color: --avatar--color;
+$avatar-border-radius: --avatar--border-radius;
+
+$default-size: 32px;
+
+@mixin imageSize($default) {
+  height: var($avatar-size, $default);
+  width: var($avatar-size, $default);
+}
+
+@mixin initialsFontSize($default) {
+  font-size: calc(var(#{$avatar-size}, #{$default}) * 0.42);
+}
+
+@mixin avatarStyles($size) {
+  height: var($avatar-size, $size);
+  width: var($avatar-size, $size);
+  .image img {
+    @include imageSize($size);
+  }
+  .initials {
+    @include initialsFontSize($size);
+    line-height: var($avatar-size, $size);
+    height: var($avatar-size, $size);
+  }
+}
+
+:host {
+  display: inline-block;
+  font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto,
+    'Helvetica Neue', sans-serif;
+  vertical-align: top;
+
+  .root {
+    text-align: center;
+
+    height: var($avatar-size, $default-size);
+    width: var($avatar-size, $default-size);
+
+    .image {
+      height: 100%;
+      width: 100%;
+      img {
+        border-radius: var($avatar-border-radius, 50%);
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    .initials {
+      color: var($avatar-color, white);
+      background: var($avatar-background, red);
+
+      line-height: var($avatar-size, $default-size);
+      height: var($avatar-size, $default-size);
+
+      font-size: calc(var(#{$avatar-size}, #{$default-size}) * 0.42);
+
+      font-weight: 600;
+      cursor: default;
+
+      border-radius: var($avatar-border-radius, 50%);
+    }
+  }
+}
