@@ -30,6 +30,7 @@ import {
   detailsTemplate,
   imageTemplate,
 } from "./mgt-fast-person-template";
+import { delay } from "@microsoft/mgt/dist/es6/utils/Utils";
 
 /**
  * Enumeration to define what parts of the person component render
@@ -332,6 +333,9 @@ export class MgtFastPerson extends FastMgtBase {
    * @memberof MgtPerson
    */
   protected async loadState() {
+    this.renderTemplate('no-data', null);
+    this.renderTemplate('loading', null);
+
     const provider = Providers.globalProvider;
     if (!provider || provider.state === ProviderState.Loading) {
       return;
@@ -376,6 +380,9 @@ export class MgtFastPerson extends FastMgtBase {
         }
       }
     }
+
+    this.renderTemplate('default', {person: this.personDetails, personImage: this.getImage()});
+
   }
 
   /** @internal */
@@ -466,21 +473,18 @@ export class MgtFastPerson extends FastMgtBase {
 
   /** @internal */
   public handleMouseClick(e: MouseEvent) {
-    console.log("mouse click");
   }
 
   /** @internal */
   public handleMouseEnter(e: MouseEvent) {
     clearTimeout(this._mouseEnterTimeout);
     clearTimeout(this._mouseLeaveTimeout);
-    console.log("mouse enter");
   }
 
   /** @internal */
   public handleMouseLeave(e: MouseEvent) {
     clearTimeout(this._mouseEnterTimeout);
     clearTimeout(this._mouseLeaveTimeout);
-    console.log("mouse exit");
   }
 
   private getColorFromName(name) {

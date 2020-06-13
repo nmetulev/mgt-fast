@@ -10,7 +10,81 @@
   </head>
   <body>
     <mgt-mock-provider></mgt-mock-provider>
-    <mgt-login></mgt-login>
-    <mgt-fast-person person-query="me" view="twolines"></mgt-person>
+    
+    <h2>Default</h2>
+    <mgt-fast-person person-query="me" view="avatar"></mgt-fast-person>
+
+    <h2>One line</h2>
+    <mgt-person person-query="me" view="oneline"></mgt-person>
+
+    <h2>Two lines</h2>
+    <mgt-person person-query="me" view="twolines"></mgt-person>
+
+    <h2>No data template</h2>
+    <mgt-fast-person>
+      <template data-type="no-data">
+        <div>No person</div>
+      </template>
+    </mgt-fast-person>
+
+    <h2>Loading template</h2>
+    <mgt-fast-person person-query="me" view="twolines">
+      <template data-type="loading">
+        <div>Loading</div>
+      </template>
+    </mgt-fast-person>
+
+    <h2>Default template</h2>
+    <mgt-fast-person person-query="me">
+      <template>
+        <div>
+          <img src="{{personImage}}" style="height: 40px;" />
+          <div>{{person.displayName}}</div>
+        </div>
+      </template>
+    </mgt-fast-person>
+
+  
+    <h2>Change line content</h2>
+    <!--add fallback property by comma separating-->
+    <mgt-person
+      person-query="me"
+      line1-property="givenName"
+      line2-property="jobTitle,mail"
+      view="twoLines"
+    ></mgt-person>
+  
+    <h2>Large avatar</h2>
+    <mgt-person person-query="me" avatar-size="large"></mgt-person>
+  
+    <h2>Different styles (see css tab for style)</h2>
+    <mgt-person class="styled-person" person-query="me" view="twoLines"></mgt-person>
+  
+    <div class="example" style="width: 200px">
+      <h2>Overflow</h2>
+      <mgt-person person-query="me" view="twoLines"></mgt-person>
+    </div>
+  
+    <h2>Style initials (see css tab for style)</h2>
+    <mgt-person class="person-initials" person-query="alex@fineartschool.net" view="oneline"></mgt-person>
+  
+    <style>
+       .styled-person {
+      --font-family: 'Comic Sans MS', cursive, sans-serif;
+      --color: red;
+      --avatar-size: 60px;
+      --font-size: 20px;
+      --line2-color: green;
+      --avatar-border-radius: 10% 35%;
+      --line2-text-transform: uppercase;
+    }
+
+    .person-initials {
+      --initials-color: yellow;
+      --initials-background-color: red;
+      --avatar-size: 60px;
+      --avatar-border-radius: 10% 35%;
+    }
+    </style>
   </body>
 </html>

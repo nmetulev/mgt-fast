@@ -3,37 +3,52 @@ import { MgtFastPerson, PersonViewType } from "./mgt-fast-person";
 import { getEmailFromGraphEntity } from "@microsoft/mgt/dist/es6/graph/graph.people";
 
 export const template = html<MgtFastPerson>`
-  ${when(
-    (x) => x.isLoadingState && !x.personDetails,
-    (x) => x.renderLoading()
-  )}
-  ${when(
-    (x) => !x.personDetails && !x.getImage(),
-    (x) => x.renderNoData()
-  )}
+  ${x => {
+    if (x.isLoadingState && !x.personDetails) {
+      return x.renderLoading();
+    } else if (!x.personDetails && !x.getImage()) {
+      return x.renderNoData();
+    } else if (x.templates['default']) {
+      return html`<slot name="default"></slot>`;
+    }
 
-  ${when(x => x.personDetails, html<MgtFastPerson>`
-  <div
-    class="root"
-    @click=${(x, c) => x.handleMouseClick(c.event as MouseEvent)}
-    @mouseenter=${(x, c) => x.handleMouseEnter(c.event as MouseEvent)}
-    @mouseLeave=${(x, c) => x.handleMouseLeave(c.event as MouseEvent)}
-  >
-    <div class="person-root">
-      ${(x) => x.renderImage()} ${(x) => x.renderDetails()}
-    </div>
-  </div>
-  `)}
+    return rootTemplate;
+  }}
 `;
 
-export const loadingTemplate = html<MgtFastPerson>`<div></div>`;
+const rootTemplate = html<MgtFastPerson>`
+<div
+  class="root"
+  @click=${(x, c) => x.handleMouseClick(c.event as MouseEvent)}
+  @mouseenter=${(x, c) => x.handleMouseEnter(c.event as MouseEvent)}
+  @mouseleave=${(x, c) => x.handleMouseLeave(c.event as MouseEvent)}
+>
+  <div class="person-root">
+    ${(x) => x.renderImage()} ${(x) => x.renderDetails()}
+  </div>
+</div>
+`;
+
+export const loadingTemplate = html<MgtFastPerson>`
+${x => {
+  if (x.templates['loading']) {
+    return html`<slot name="loading"></slot>`
+  } else return null;
+}}`;
 
 export const noDataTemplate = html<MgtFastPerson>`
-<i :className="avatar-icon ms-Icon ms-Icon--Contact ${(x) =>
-  x.isLargeAvatar() ? "small" : ""}></i>`;
+${x => {
+  if (x.templates['no-data']) {
+    return html`<slot name="no-data"></slot>`;
+  } else {
+    return html<MgtFastPerson>`<i :className="avatar-icon ms-Icon ms-Icon--Contact ${(x) =>
+      x.isLargeAvatar() ? "small" : ""}"></i>`;
+  }
+}}`
+;
 
 export const imageTemplate = html<MgtFastPerson>`
-<div class="user-avatar ${(x) =>
+<div :className="user-avatar ${(x) =>
   !x.getImage() || x._isInvalidImageSrc ? "initials" : ""} ${(x) =>
   !x.isLargeAvatar() ? "small" : ""} ${(x) => x._personAvatarBg}"
     title=${(x) =>
